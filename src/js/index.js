@@ -13,12 +13,12 @@ const inputRef = document.querySelector('.input');
 const countryRef = document.querySelector('.country-res');
 
 const renderRes = country => {
+  countryRef.innerHTML = '';
   if (country.length > 10) {
     error({
       text: 'Too many matches found. Please, enter a more specific query!',
       delay: 3000,
     });
-    countryRef.innerHTML = '';
   } else if (country.length > 1) {
     countryRef.innerHTML = countryListTpl(country);
   } else if (country.length === 1) {
@@ -28,15 +28,12 @@ const renderRes = country => {
       text: 'Invalid name country!',
       delay: 3000,
     });
-    countryRef.innerHTML = '';
   }
 };
 
 const countryLoaded = res => {
-  if (res === '') {
-    countryRef.innerHTML = '';
-    return;
-  }
+  countryRef.innerHTML = '';
+  if (res === '') return;
   fetchCountries(res)
     .then(renderRes)
     .catch(error => error);
